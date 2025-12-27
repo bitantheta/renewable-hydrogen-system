@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>How the Model Works</title>
+  <link rel="stylesheet" href="explorer.css" />
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <a href="index.html">System Overview</a>
+    <a href="explorer.html">System Explorer</a>
+    <a class="active" href="how-it-works.html">How the Model Works</a>
+    <a href="assumptions.html">Assumptions & Limits</a>
+  </nav>
+
+  <!-- FULL WIDTH CONTENT -->
+  <main class="how-full">
+
+    <!-- HEADER -->
+    <header class="how-header">
+      <h1>How the Model Works</h1>
+      <p>
+        This page explains the physical reasoning and control logic behind the
+        renewable-powered hydrogen system model. The goal is not mathematical
+        detail, but clear intuition for why the system behaves the way it does.
+      </p>
+    </header>
+
+    <!-- SECTION 1 -->
+    <section class="how-section">
+      <h2>1. Energy Flow Through the System</h2>
+      <p>
+        The system begins with renewable electricity, which is routed to an
+        electrolyzer stack to produce hydrogen. This conversion is not perfect:
+        some electrical energy is converted into chemical energy (hydrogen),
+        while the remainder appears as heat.
+      </p>
+      <p>
+        At any moment, hydrogen production is limited by the weakest part of the
+        chain: available renewable power, electrolyzer capacity, or thermal
+        constraints. Excess renewable energy cannot be stored implicitly and is
+        curtailed if downstream systems cannot accept it.
+      </p>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="how-section">
+      <h2>2. Electrochemical Behavior of the Electrolyzer</h2>
+      <p>
+        Inside the electrolyzer, hydrogen production increases with electrical
+        current. However, operating at higher current densities raises the cell
+        voltage due to electrochemical losses. This reduces efficiency and
+        increases heat generation.
+      </p>
+      <p>
+        As a result, there is a practical limit to how aggressively the
+        electrolyzer can be driven. Producing more hydrogen always comes at the
+        cost of higher electrical consumption per unit of hydrogen.
+      </p>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section class="how-section">
+      <h2>3. Thermal Constraints and Cooling</h2>
+      <p>
+        Heat generated within the stack must be removed to keep temperatures
+        within safe operating limits. Cooling systems extract this heat, but
+        their effectiveness is finite.
+      </p>
+      <p>
+        If cooling is insufficient, the control system must reduce current to
+        avoid excessive temperatures. This directly limits hydrogen production,
+        even when electrical power and electrolyzer capacity are available.
+      </p>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section class="how-section">
+      <h2>4. Control Logic and Safe Operation</h2>
+      <p>
+        The model includes control logic that prioritizes safe and stable
+        operation. Power input is followed only as long as voltage, temperature,
+        and ramp-rate constraints are respected.
+      </p>
+      <p>
+        When any constraint becomes active, the system automatically derates
+        operation. This ensures feasibility, but also explains why hydrogen
+        output does not always increase linearly with available power.
+      </p>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section class="how-section">
+      <h2>5. The Feasible Operating Envelope</h2>
+      <p>
+        By simulating the system across a range of renewable oversizing ratios,
+        the model identifies a feasible operating envelope. This envelope
+        represents the maximum hydrogen production achievable without violating
+        any physical or control limits.
+      </p>
+      <p>
+        Increasing renewable capacity initially increases hydrogen output, but
+        eventually encounters diminishing returns as electrolyzer capacity or
+        thermal constraints become limiting.
+      </p>
+    </section>
+
+    <!-- SECTION 6 (HIGHLIGHT) -->
+    <section class="how-section how-highlight">
+      <h2>6. Interpreting the System Explorer</h2>
+      <p>
+        In the System Explorer, the green curve represents the feasible envelope
+        computed by the model. The dashed horizontal line shows the electrolyzer
+        capacity limit, while the green dot indicates the current operating
+        point.
+      </p>
+      <p>
+        Moving the sliders shifts this operating point within the envelope. The
+        interpretation panel explains which constraint is active and why further
+        increases in certain parameters may or may not increase hydrogen
+        production.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="how-footer">
+      <p>
+        Together, these elements form a reduced-order but physically grounded
+        model that captures the dominant trade-offs governing renewable hydrogen
+        systems.
+      </p>
+    </footer>
+
+  </main>
+
+</body>
+</html>

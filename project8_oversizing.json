@@ -1,0 +1,44 @@
+[
+  {
+    "oversize_ratio": 0.5,
+    "h2_kg_day": 1.4125534176338252,
+    "capacity_factor": 0.6366197497199576,
+    "renewable_utilization": 0.9999999748928451,
+    "kwh_per_kg": 54.082464401482646
+  },
+  {
+    "oversize_ratio": 0.8,
+    "h2_kg_day": 2.064096766181514,
+    "capacity_factor": 0.6366197659505791,
+    "renewable_utilization": 0.9999999984830736,
+    "kwh_per_kg": 59.217666906468445
+  },
+  {
+    "oversize_ratio": 1.0,
+    "h2_kg_day": 2.4521387148573397,
+    "capacity_factor": 0.6472791109160345,
+    "renewable_utilization": 0.997552843062021,
+    "kwh_per_kg": 62.15588242509046
+  },
+  {
+    "oversize_ratio": 1.2,
+    "h2_kg_day": 2.675572357892772,
+    "capacity_factor": 0.720917819871211,
+    "renewable_utilization": 0.925867487325584,
+    "kwh_per_kg": 63.446071920937506
+  },
+  {
+    "oversize_ratio": 1.5,
+    "h2_kg_day": 2.8672959691583837,
+    "capacity_factor": 0.7831831250086191,
+    "renewable_utilization": 0.8046673527332914,
+    "kwh_per_kg": 64.31710323807876
+  },
+  {
+    "oversize_ratio": 2.0,
+    "h2_kg_day": 3.044882920143199,
+    "capacity_factor": 0.8404633247417501,
+    "renewable_utilization": 0.6476391443398906,
+    "kwh_per_kg": 64.99558362011642
+  }
+]

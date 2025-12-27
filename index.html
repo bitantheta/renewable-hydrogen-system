@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>From Sunlight to Hydrogen</title>
+  <link rel="stylesheet" href="page1.css">
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <a class="active">How Green Hydrogen Is Made</a>
+  <a href="explorer.html">Explore the Model →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>From Sunlight to Hydrogen</h1>
+  <p>
+    A visual explanation of how renewable energy is converted into green hydrogen,
+    highlighting the major subsystems involved in the process.
+  </p>
+</section>
+
+<!-- SYSTEM DIAGRAM -->
+<section class="system">
+
+  <div class="component solar" data-key="solar">
+    <img src="images/solar.png">
+    <span>Solar Energy</span>
+    <div class="connector right">Electrical Power</div>
+  </div>
+
+  <div class="component power" data-key="power">
+    <img src="images/power.png">
+    <span>Power Conversion</span>
+    <div class="connector right">DC Power</div>
+  </div>
+
+  <div class="component electrolyzer" data-key="electrolyzer">
+    <img src="images/electrolyzer.png">
+    <span>Electrolysis</span>
+
+    <div class="connector right">Hydrogen Flow</div>
+    <div class="connector down">Heat Rejection</div>
+  </div>
+
+  <div class="component cooling" data-key="cooling">
+    <img src="images/cooling.png">
+    <span>Cooling</span>
+  </div>
+
+  <div class="component hydrogen" data-key="hydrogen">
+    <img src="images/hydrogen.png">
+    <span>Hydrogen</span>
+  </div>
+
+</section>
+
+
+<!-- EXPLANATION PANEL -->
+<section class="explanation" id="explanation">
+  Click on any component above to understand its role in the hydrogen
+  production process.
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <a href="explorer.html">Play with the real engineering model →</a>
+</section>
+
+<script src="page1.js"></script>
+</body>
+</html>

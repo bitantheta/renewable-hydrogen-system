@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>System Explorer</title>
+
+  <!-- Plotly -->
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+  <link rel="stylesheet" href="explorer.css" />
+</head>
+
+<body>
+  <nav class="nav">
+  <a href="index.html">System Overview</a>
+  <a class="active" href="explorer.html">System Explorer</a>
+  <a href="how-it-works.html">How the Model Works</a>
+  <a href="assumptions.html">Assumptions & Limits</a>
+</nav>
+
+  <main class="explorer">
+
+    <header>
+      <h1>System Explorer</h1>
+      <p>
+        Explore how renewable sizing and operational controls move the
+        operating point within the system’s feasible envelope.
+      </p>
+    </header>
+
+    <section class="explorer-grid">
+
+      <!-- LEFT CONTROLS -->
+      <div class="controls">
+
+        <label>
+          Solar Oversizing Ratio:
+          <span id="solarVal">1.00</span>
+        </label>
+        <input id="solar" type="range" min="0.5" max="2.0" step="0.01" value="1.0" />
+
+        <label>
+          Electrolyzer Capacity (MW):
+          <span id="capVal">10</span>
+        </label>
+        <input id="capacity" type="range" min="5" max="30" step="1" value="10" />
+
+        <label>
+          Stack Scaling:
+          <span id="stackVal">1.00</span>x
+        </label>
+        <input id="stack" type="range" min="0.5" max="2.0" step="0.05" value="1.0" />
+
+        <label>
+          Cooling Effectiveness:
+          <span id="coolVal">1.00</span>x
+        </label>
+        <input id="cooling" type="range" min="0.5" max="1.5" step="0.05" value="1.0" />
+
+      </div>
+
+      <!-- RIGHT PLOT -->
+      <div class="plot-area">
+        <div id="plot"></div>
+      </div>
+
+    </section>
+
+    <!-- KPIs -->
+    <section class="kpis">
+      <div class="kpi">
+        <div class="kpi-title">Hydrogen</div>
+        <div class="kpi-value"><span id="h2">–</span> kg/day</div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-title">Efficiency</div>
+        <div class="kpi-value"><span id="eff">–</span> kWh/kg</div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-title">Loss vs Ideal</div>
+        <div class="kpi-value"><span id="loss">–</span></div>
+      </div>
+
+      <div class="kpi">
+        <div class="kpi-title">Limiting Factor</div>
+        <div class="kpi-value" id="limiter">–</div>
+      </div>
+    </section>
+
+    <section class="interpretation" id="interpretation">
+      Adjust the sliders to explore system constraints.
+    </section>
+
+  </main>
+
+  <script src="explorer.js"></script>
+</body>
+</html>

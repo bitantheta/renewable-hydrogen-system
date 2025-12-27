@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Assumptions & Limits</title>
+  <link rel="stylesheet" href="explorer.css" />
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <a href="index.html">System Overview</a>
+    <a href="explorer.html">System Explorer</a>
+    <a href="how-it-works.html">How the Model Works</a>
+    <a class="active" href="assumptions.html">Assumptions & Limits</a>
+  </nav>
+
+  <!-- FULL WIDTH CONTENT -->
+  <main class="how-full">
+
+    <!-- HEADER -->
+    <header class="how-header">
+      <h1>Assumptions & Limits</h1>
+      <p>
+        This page documents the key assumptions used in the model and clarifies
+        what the results should — and should not — be interpreted as.
+        The intent is transparency, not to hide complexity.
+      </p>
+    </header>
+
+    <!-- SECTION 1 -->
+    <section class="how-section">
+      <h2>1. Scope of the Model</h2>
+      <p>
+        The model is a reduced-order representation of a renewable-powered
+        electrolyzer system. It is designed to capture dominant physical and
+        operational trade-offs, not to replace detailed stack-level or plant-level
+        simulations.
+      </p>
+      <p>
+        Results are most useful for comparative reasoning, sensitivity analysis,
+        and intuition-building rather than absolute design certification.
+      </p>
+    </section>
+
+    <!-- SECTION 2 -->
+    <section class="how-section">
+      <h2>2. Renewable Power Representation</h2>
+      <p>
+        Renewable input is treated as an exogenous power source with no internal
+        dynamics, forecasting uncertainty, or grid interaction effects.
+        Temporal variability is simplified to focus on system-level constraints.
+      </p>
+      <p>
+        Energy storage, curtailment markets, and grid export are not modeled
+        explicitly.
+      </p>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section class="how-section">
+      <h2>3. Electrolyzer Modeling Assumptions</h2>
+      <p>
+        Electrochemical behavior is represented using a lumped polarization
+        relationship. Spatial gradients, degradation mechanisms, and transient
+        electrochemistry are neglected.
+      </p>
+      <p>
+        Stack scaling is assumed linear, meaning performance scales proportionally
+        with cell count. Balance-of-plant effects are not explicitly included.
+      </p>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section class="how-section">
+      <h2>4. Thermal Model Limitations</h2>
+      <p>
+        The thermal model assumes a single effective stack temperature and a
+        simplified heat removal mechanism.
+      </p>
+      <p>
+        Local hot spots, coolant maldistribution, and startup/shutdown thermal
+        transients are outside the scope of this representation.
+      </p>
+    </section>
+
+    <!-- SECTION 5 -->
+    <section class="how-section">
+      <h2>5. Control and Operational Constraints</h2>
+      <p>
+        Control logic is rule-based and prioritizes feasibility and safety over
+        optimization. Voltage limits, temperature limits, and ramp-rate limits
+        are enforced deterministically.
+      </p>
+      <p>
+        Advanced predictive control, economic dispatch, and degradation-aware
+        control strategies are not included.
+      </p>
+    </section>
+
+    <!-- SECTION 6 -->
+    <section class="how-section how-highlight">
+      <h2>6. How to Interpret the Results</h2>
+      <p>
+        The model outputs should be interpreted as feasible operating trends,
+        not exact production guarantees.
+      </p>
+      <p>
+        When a parameter change does not increase hydrogen output, it indicates
+        that another constraint has become limiting — not that the model is
+        malfunctioning.
+      </p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="how-footer">
+      <p>
+        Within these assumptions, the model provides a physically grounded and
+        transparent framework for understanding renewable hydrogen system behavior.
+      </p>
+    </footer>
+
+  </main>
+
+</body>
+</html>
