@@ -324,6 +324,8 @@ function baseLayout(xlab, ylab) {
     paper_bgcolor: "#0f1623",
     plot_bgcolor: "#0f1623",
 
+    height: mobile ? 420 : 520,   // 🔑 CRITICAL FIX
+
     font: {
       color: "#e5e7eb",
       size: mobile ? 11 : 13
@@ -331,16 +333,16 @@ function baseLayout(xlab, ylab) {
 
     margin: {
       t: 40,
-      l: mobile ? 55 : 65,
+      l: mobile ? 60 : 70,
       r: 20,
-      b: mobile ? 55 : 65
+      b: mobile ? 90 : 70   // 🔑 space for axis titles + legend
     },
 
     xaxis: {
       title: {
         text: xlab,
         font: { size: mobile ? 11 : 14 },
-        standoff: mobile ? 8 : 16
+        standoff: mobile ? 25 : 30
       },
       tickfont: { size: mobile ? 10 : 12 },
       automargin: true
@@ -350,7 +352,7 @@ function baseLayout(xlab, ylab) {
       title: {
         text: ylab,
         font: { size: mobile ? 11 : 14 },
-        standoff: mobile ? 8 : 16
+        standoff: mobile ? 30 : 35
       },
       tickfont: { size: mobile ? 10 : 12 },
       automargin: true
@@ -359,11 +361,12 @@ function baseLayout(xlab, ylab) {
     legend: {
       orientation: mobile ? "h" : "v",
       x: mobile ? 0 : 1.02,
-      y: mobile ? -0.25 : 1,
+      y: mobile ? -0.35 : 1,   // 🔑 push legend lower
       font: { size: mobile ? 10 : 12 }
     }
   };
 }
+
 
 
 function explanationText(regime) {
