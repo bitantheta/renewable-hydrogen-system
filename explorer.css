@@ -700,26 +700,70 @@ hr,
   line-height: 1.4;
 }
 
-@media (max-width: 900px) {
+/* ===========================
+   MOBILE FIXES — SYSTEM EXPLORER
+   =========================== */
+@media (max-width: 768px) {
 
+  body {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  header h1 {
+    font-size: 2rem;
+    line-height: 1.25;
+  }
+
+  header p {
+    font-size: 0.95rem;
+  }
+
+  /* Stack layout instead of side-by-side */
   .explorer-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
 
+  /* Order content logically */
   .controls {
-    order: 2;
-  }
-
-  .plot-area {
     order: 1;
   }
 
   .kpis {
-    grid-template-columns: repeat(2, 1fr);
+    order: 2;
+  }
+
+  .plot-area {
+    order: 3;
   }
 
   .secondary-plots {
-    grid-template-columns: 1fr;
+    order: 4;
+  }
+
+  /* Sliders spacing */
+  .controls label {
+    font-size: 0.95rem;
+  }
+
+  /* KPI cards fit screen */
+  .kpis {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  /* Plot cards spacing */
+  .plot-card {
+    margin-bottom: 24px;
+  }
+
+  /* Reduce section padding */
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
   }
 }
+
 
