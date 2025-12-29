@@ -331,61 +331,57 @@ body {
 
 @media (max-width: 768px) {
 
-  /* NAV */
-  .nav {
-    padding: 12px 16px;
+  /* Base text scaling */
+  body {
+    font-size: 15px;
+    line-height: 1.55;
   }
 
-  .nav a {
-    display: block;
-    margin: 8px 0;
-  }
-
-  /* HERO */
   .hero {
     padding: 32px 20px;
   }
 
   .hero h1 {
     font-size: 2rem;
-    line-height: 1.2;
+    line-height: 1.25;
   }
 
   .hero p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
-  /* SYSTEM DIAGRAM */
+  /* Stack system components vertically */
   .system {
     flex-direction: column;
+    align-items: center;
     gap: 24px;
     padding: 40px 20px;
   }
 
-  /* COMPONENT CARDS */
   .component {
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
   }
 
-  /* CONNECTORS — TURN OFF ON MOBILE */
+  /* Remove connector lines on mobile */
   .connector {
     display: none;
   }
 
-  /* EXPLANATION BOX */
+  /* Center "Why constraints matter" section */
   .explanation {
-    margin: 20px;
-    font-size: 1rem;
+    text-align: center;
+    margin: 24px auto;
+    padding: 20px;
   }
 
-  /* CTA */
+  /* CTA spacing */
   .cta {
     padding: 24px 16px;
   }
 
   .cta a {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
 }
 
