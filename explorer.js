@@ -2,6 +2,11 @@
 // SYSTEM EXPLORER — ENGINEERING-GRADE INTERACTIVE MODEL
 // =====================================================
 const isMobile = window.innerWidth < 768;
+const PLOT_CONFIG = {
+  responsive: true,
+  displayModeBar: false
+};
+
 // -----------------------------
 // DOM REFERENCES
 // -----------------------------
@@ -139,7 +144,9 @@ function drawMainPlot(x, y, capLimit, regime) {
   const xs = envelopeData.map(d => d.oversize_ratio);
   const ys = envelopeData.map(d => d.h2_kg_day);
 
-  Plotly.react("plot", [
+Plotly.react(
+  "plot",
+  [
     {
       x: xs,
       y: ys,
@@ -161,10 +168,14 @@ function drawMainPlot(x, y, capLimit, regime) {
       name: "Operating point",
       marker: { size: 14, color: REGIME_COLORS[regime] }
     }
-  ], baseLayout(
+  ],
+  baseLayout(
     "Solar oversizing ratio",
     "Hydrogen production (kg/day)"
-  ));
+  ),
+  PLOT_CONFIG
+);
+
 }
 
 // ---- Power constraints ----
@@ -174,11 +185,32 @@ function drawPowerPlot(cap, stk, cool) {
   const capP = xs.map(() => cap);
   const thermalP = xs.map(() => cap * stk * cool);
 
-  Plotly.react("powerPlot", [
-    { x: xs, y: solarP, name: "Available renewable power", line: { color: REGIME_COLORS.solar }},
-    { x: xs, y: capP, name: "Electrolyzer capacity", line: { dash: "dot", color: REGIME_COLORS.capacity }},
-    { x: xs, y: thermalP, name: "Thermal absorption limit", line: { dash: "dash", color: REGIME_COLORS.thermal }}
-  ], baseLayout("Solar oversizing", "Power (MW)"));
+Plotly.react(
+  "powerPlot",
+  [
+    {
+      x: xs,
+      y: solarP,
+      name: "Available renewable power",
+      line: { color: REGIME_COLORS.solar }
+    },
+    {
+      x: xs,
+      y: capP,
+      name: "Electrolyzer capacity",
+      line: { dash: "dot", color: REGIME_COLORS.capacity }
+    },
+    {
+      x: xs,
+      y: thermalP,
+      name: "Thermal absorption limit",
+      line: { dash: "dash", color: REGIME_COLORS.thermal }
+    }
+  ],
+  baseLayout("Solar oversizing", "Power (MW)"),
+  PLOT_CONFIG
+);
+
 }
 
 // ---- Temperature (clipped at Tmax) ----
@@ -187,24 +219,46 @@ function drawTempPlot(stk, cool) {
   const rawTemp = xs.map(x => T_MAX * x / (stk * cool));
   const temp = rawTemp.map(t => Math.min(t, T_MAX));
 
-  Plotly.react("tempPlot", [
-    { x: xs, y: temp, name: "Stack temperature", line: { color: REGIME_COLORS.solar }},
-    { x: xs, y: xs.map(() => T_MAX), name: "Thermal limit", line: { dash: "dot", color: REGIME_COLORS.thermal }}
-  ], baseLayout("Solar oversizing", "Temperature (°C)"));
+Plotly.react(
+  "tempPlot",
+  [
+    {
+      x: xs,
+      y: temp,
+      name: "Stack temperature",
+      line: { color: REGIME_COLORS.solar }
+    },
+    {
+      x: xs,
+      y: xs.map(() => T_MAX),
+      name: "Thermal limit",
+      line: { dash: "dot", color: REGIME_COLORS.thermal }
+    }
+  ],
+  baseLayout("Solar oversizing", "Temperature (°C)"),
+  PLOT_CONFIG
+);
+
 }
 
 // ---- Specific energy ----
 function drawEffPlot() {
-  Plotly.react("effPlot", [
-    {
-      x: envelopeData.map(d => d.oversize_ratio),
-      y: envelopeData.map(d => d.kwh_per_kg),
-      mode: "lines",
-      name: "Ideal specific energy",
-      line: { color: "#22c55e" }
-    }
-  ], baseLayout("Solar oversizing", "kWh / kg"));
+  Plotly.react(
+    "effPlot",
+    [
+      {
+        x: envelopeData.map(d => d.oversize_ratio),
+        y: envelopeData.map(d => d.kwh_per_kg),
+        mode: "lines",
+        name: "Ideal specific energy",
+        line: { color: "#22c55e" }
+      }
+    ],
+    baseLayout("Solar oversizing", "kWh / kg"),
+    PLOT_CONFIG
+  );
 }
+
 
 // ---- Loss attribution (operating point based) ----
 function drawLossPlot(utilization, stk, cool) {
@@ -212,14 +266,20 @@ function drawLossPlot(utilization, stk, cool) {
   const stackLoss = Math.max(0, 1 - 1 / stk);
   const curtailmentLoss = Math.max(0, 1 - utilization);
 
-  Plotly.react("lossPlot", [
+  Plotly.react(
+  "lossPlot",
+  [
     { x: ["Losses"], y: [thermalLoss], name: "Thermal" },
     { x: ["Losses"], y: [stackLoss], name: "Stack" },
     { x: ["Losses"], y: [curtailmentLoss], name: "Curtailment" }
-  ], {
+  ],
+  {
     ...baseLayout("", "Fraction"),
     barmode: "stack"
-  });
+  },
+  PLOT_CONFIG
+);
+
 }
 
 // ---- Dominant regime over explored space ----
@@ -234,57 +294,63 @@ function drawRegimePlot(stk, cool) {
 
   const total = envelopeData.length;
 
-  Plotly.react("regimePlot", [
-    { x: ["Solar"], y: [solarCount / total], type: "bar", marker: { color: REGIME_COLORS.solar }},
-    { x: ["Capacity"], y: [capacityCount / total], type: "bar", marker: { color: REGIME_COLORS.capacity }},
-    { x: ["Thermal"], y: [thermalCount / total], type: "bar", marker: { color: REGIME_COLORS.thermal }}
-  ], {
+  Plotly.react(
+  "regimePlot",
+  [
+    { x: ["Solar"], y: [solarCount / total], type: "bar", marker: { color: REGIME_COLORS.solar } },
+    { x: ["Capacity"], y: [capacityCount / total], type: "bar", marker: { color: REGIME_COLORS.capacity } },
+    { x: ["Thermal"], y: [thermalCount / total], type: "bar", marker: { color: REGIME_COLORS.thermal } }
+  ],
+  {
     ...baseLayout("", "Fraction of operating range"),
     barmode: "stack"
-  });
+  },
+  {
+    responsive: true,
+    displayModeBar: false
+  }
+);
+
 }
 
 // =====================================================
 // UTILITIES
 // =====================================================
 function baseLayout(xlab, ylab) {
-  const isMobile = window.innerWidth <= 768;
+  const mobile = window.innerWidth < 768;
 
   return {
+    autosize: true,
     paper_bgcolor: "#0f1623",
     plot_bgcolor: "#0f1623",
-
     font: {
       color: "#ffffff",
-      size: isMobile ? 11 : 13
+      size: mobile ? 11 : 14
     },
-
-    margin: isMobile
-      ? { t: 40, l: 42, r: 10, b: 46 }
+    margin: mobile
+      ? { t: 20, l: 45, r: 15, b: 90 }
       : { t: 40, l: 60, r: 30, b: 60 },
 
     xaxis: {
-      title: isMobile ? "" : xlab,
-      tickfont: { size: isMobile ? 10 : 12 }
+      title: mobile ? "" : xlab,
+      automargin: true
     },
-
     yaxis: {
-      title: isMobile ? "" : ylab,
-      tickfont: { size: isMobile ? 10 : 12 }
+      title: mobile ? "" : ylab,
+      automargin: true
     },
 
     legend: {
-      orientation: isMobile ? "h" : "v",
-      x: isMobile ? 0 : 1.02,
-      y: isMobile ? -0.25 : 1,
-      xanchor: isMobile ? "left" : "left",
-      yanchor: isMobile ? "top" : "top",
-      font: { size: isMobile ? 10 : 12 }
-    },
-
-    height: isMobile ? 360 : 480
+      orientation: "h",
+      x: 0,
+      y: -0.35,
+      xanchor: "left",
+      yanchor: "top",
+      font: { size: mobile ? 10 : 12 }
+    }
   };
 }
+
 
 
 
@@ -297,3 +363,10 @@ function explanationText(regime) {
   }
   return "Hydrogen production is limited by available renewable energy. Equipment capacity and cooling are sufficient.";
 }
+
+window.addEventListener("resize", () => {
+  update();
+});
+
+
+
