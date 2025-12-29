@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How the Model Works</title>
+
+  <!-- Shared Styles -->
+  <link rel="stylesheet" href="explorer.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+  <!-- MathJax -->
+  <script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['\\[', '\\]']]
+    },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
+  async>
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="stage1.js"></script>
+
+  
+
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html">System Overview</a>
+    <a href="explorer.html">System Explorer</a>
+    <a class="active" href="how-it-works.html">How the Model Works</a>
+  </nav>
+
+  <main class="explainer">
+
+    <!-- INTRO -->
+    <header class="explainer-header">
+      <h1>How the Model Works</h1>
+      <p>
+        This page walks through how a simple electrochemical idea was gradually
+        expanded into a full renewable-integrated hydrogen system model.
+        Each section adds one layer of physical realism.
+      </p>
+    </header>
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>1. Starting from a Single Electrolyzer Cell</h2>
+
+  <!-- PART 1: FOUNDATION -->
+  <div class="stage-text full">
+    <h3>Why the Electrolyzer Cell Is the Starting Point</h3>
+
+    <p>
+      Every hydrogen production system, no matter how large or complex, is built
+      from a single repeating physical unit: the electrolyzer cell. Before it is
+      meaningful to discuss stacks, cooling loops, power electronics, or
+      renewable integration, we must first understand what happens inside one
+      cell when electrical energy is supplied.
+    </p>
+
+    <p>
+      An electrolyzer cell is where electrical energy is directly converted into
+      chemical energy by splitting water into hydrogen and oxygen. The rate at
+      which hydrogen is produced, the electrical power required to sustain the
+      reaction, and the amount of heat generated are all determined locally at
+      this scale. Larger systems do not change this physics — they only scale it,
+      distribute it, or impose additional constraints on it.
+    </p>
+  </div>
+
+  <!-- PART 2: FARADAY -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key physical law:</strong> Hydrogen production follows directly
+      from Faraday’s law. The amount of hydrogen generated is proportional to the
+      electrical current passing through the cell.
+    </p>
+
+    <p>
+      This proportionality is exact and universal. Whether the system contains a
+      single cell or tens of thousands, every electron contributes identically
+      to hydrogen formation.
+    </p>
+  </div>
+
+  <!-- PART 3: CONTROL VARIABLE -->
+  <div class="stage-text full">
+    <p>
+      For this reason, <strong>current density</strong> — the current per unit
+      active area — becomes the natural control variable for electrolyzer
+      operation. System size does not change electrochemistry; it only changes
+      how current is distributed across cells.
+    </p>
+  </div>
+
+  <!-- PART 4: VOLTAGE FLOOR -->
+  <div class="stage-text full">
+    <h3>Why Voltage Is Not Freely Chosen</h3>
+
+    <p>
+      The voltage required to drive the electrochemical reaction is not
+      arbitrary. It is set by fundamental thermodynamic and kinetic
+      considerations.
+    </p>
+
+    <p>
+      Even under ideal conditions, a minimum voltage is required to split water.
+      This minimum — the <strong>reversible voltage</strong> — corresponds to the
+      Gibbs free energy change of the reaction and represents the absolute lower
+      bound on energy consumption.
+    </p>
+  </div>
+
+  <!-- EQUATION -->
+  <div class="equation-band full">
+    <div class="equation-block">
+      \[
+      V_{\text{cell}} = V_{\text{rev}} + \eta_{\text{act}} + \eta_{\text{ohmic}}
+      \]
+      <p class="equation-caption">
+        Cell voltage decomposed into reversible and irreversible contributions
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 5: LOSSES -->
+  <div class="stage-text full">
+    <p>
+      Real electrolyzer cells must operate at voltages higher than this
+      reversible minimum because all practical electrochemical processes
+      exhibit irreversible losses. These losses arise from two distinct
+      physical mechanisms:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Activation losses</strong> — energy required to overcome kinetic
+        barriers at electrode surfaces
+      </li>
+      <li>
+        <strong>Ohmic losses</strong> — resistive losses within membranes,
+        electrodes, and current collectors
+      </li>
+    </ul>
+  </div>
+
+  <!-- INTERPRETATION CALLOUT -->
+  <div class="explain-block highlight full">
+    <p>
+      The reversible voltage sets a hard thermodynamic floor. Activation and
+      ohmic losses represent the unavoidable price paid for operating the
+      reaction at a finite rate.
+    </p>
+
+    <p>
+      As current density increases, these penalties grow. The operating voltage
+      therefore rises not because of poor design, but because irreversibility is
+      fundamental to electrochemical energy conversion.
+    </p>
+  </div>
+
+  <!-- PART 6: ENERGY & HEAT -->
+  <div class="stage-text full">
+    <h3>Where the Energy Goes</h3>
+
+    <p>
+      Electrical power input to the cell is given by the product of voltage and
+      current. Only a portion of this power is stored as chemical energy in
+      hydrogen.
+    </p>
+
+    <p>
+      The remaining fraction, arising from irreversible losses, must appear as
+      heat within the cell. Heat generation is therefore not a flaw to be
+      eliminated, but a fundamental consequence of operating any real
+      electrochemical system at finite current.
+    </p>
+  </div>
+
+  <!-- PLOT LEAD-IN -->
+  <div class="stage-text full">
+    <p>
+      The plots below show how these relationships manifest quantitatively.
+      Voltage, power, and heat all increase as current density rises, revealing
+      the trade-offs that ultimately constrain system-level operation.
+    </p>
+  </div>
+
+  <!-- PRIMARY PLOT -->
+  <div class="plot-row full">
+    <div class="plot-card wide">
+      <h3>Cell Voltage vs Current Density</h3>
+      <canvas id="voltagePlot"></canvas>
+      <p class="plot-caption">
+        Voltage increases non-linearly with current due to activation and
+        ohmic losses. Higher current always demands higher voltage.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECONDARY PLOTS -->
+  <div class="plot-row two full">
+
+    <div class="plot-card">
+      <h3>Electrical Power vs Current Density</h3>
+      <canvas id="powerPlot"></canvas>
+      <p class="plot-caption">
+        Electrical power rises rapidly because both voltage and current
+        increase together. High-current operation is energetically expensive.
+      </p>
+    </div>
+
+    <div class="plot-card">
+      <h3>Heat Generation vs Current Density</h3>
+      <canvas id="heatPlot"></canvas>
+      <p class="plot-caption">
+        The difference between electrical input and reversible energy
+        appears as heat. Heat generation is unavoidable and grows with current.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- BRIDGE -->
+  <div class="stage-text full">
+    <p>
+      These cell-level relationships form the foundation of the entire system
+      model. Stack scaling redistributes current density, cooling systems exist
+      to remove generated heat, and power and thermal limits emerge directly
+      from voltage rise.
+    </p>
+
+    <p>
+      In the next section, we examine how the voltage–current relationship
+      shapes feasible operating regimes and begins to impose hard constraints
+      on system-level performance.
+    </p>
+  </div>
+
+</section>
+
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>2. Thermal Dynamics and Energy Balance</h2>
+
+  <!-- PART 1: PROBLEM SETUP -->
+  <div class="stage-text full">
+    <h3>Where the Electrical Losses Go</h3>
+
+    <p>
+      Electrical losses inside the electrolyzer do not disappear. The difference
+      between the electrical power supplied to the cell and the reversible
+      chemical energy stored in hydrogen must appear as heat within the cell
+      structure.
+    </p>
+
+    <p>
+      This heat is generated continuously during operation and accumulates
+      locally within the electrodes, membrane, and electrolyte. As a result,
+      cell temperature does not remain fixed when current increases.
+    </p>
+  </div>
+
+  <!-- PART 2: KEY CONCEPT -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> Cell temperature is not a control variable.
+      It is an outcome of energy balance between internally generated heat
+      and externally removed heat.
+    </p>
+  </div>
+
+  <!-- PART 3: TEMPERATURE AS AN OUTCOME -->
+  <div class="stage-text full">
+    <p>
+      When an electrolyzer begins operating, heat generation exceeds heat
+      removal and the cell temperature rises. This rise continues until the
+      rate of heat rejection to the coolant exactly balances the rate of heat
+      generation inside the cell.
+    </p>
+
+    <p>
+      The resulting operating temperature is therefore a steady-state solution,
+      not a setpoint chosen independently by the operator. Any change in
+      current, cooling effectiveness, or coolant temperature shifts this
+      balance and produces a new steady temperature.
+    </p>
+  </div>
+
+  <!-- ENERGY BALANCE EQUATION -->
+  <div class="equation-band full">
+    <div class="equation-block">
+      \[
+      \dot{Q}_{\text{gen}} = UA \,(T_{\text{cell}} - T_{\text{cool}})
+      \]
+      <p class="equation-caption">
+        Steady-state balance between internally generated heat and heat removed
+        by the cooling system
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 4: PHYSICAL INTERPRETATION -->
+  <div class="stage-text full">
+    <p>
+      In this balance, the left-hand side represents heat generated by
+      irreversible electrochemical losses, which increases strongly with
+      current density. The right-hand side represents the ability of the
+      cooling system to remove heat, characterized by the overall heat transfer
+      coefficient multiplied by effective area, denoted as <strong>UA</strong>.
+    </p>
+
+    <p>
+      The temperature difference between the cell and the coolant adjusts until
+      these two rates are equal. A larger cooling effectiveness (higher UA)
+      reduces the temperature rise required to remove the same amount of heat.
+    </p>
+  </div>
+
+  <!-- PART 5: WHY TEMPERATURE RISES WITH CURRENT -->
+  <div class="stage-text full">
+    <h3>Why Temperature Rises as Current Increases</h3>
+
+    <p>
+      As current density increases, hydrogen production rises linearly, but
+      heat generation rises more rapidly due to increasing voltage losses.
+      Cooling capacity, however, does not automatically scale with current.
+    </p>
+
+    <p>
+      The result is a monotonic rise in cell temperature with increasing
+      current density. This rise occurs even under perfectly controlled
+      operation and reflects a fundamental coupling between electrochemistry
+      and thermal physics.
+    </p>
+  </div>
+
+  <!-- STAGE 2 PLOT -->
+  <div class="plot-band full">
+
+    <div class="plot-card wide">
+      <h3>Cell Temperature vs Current Density</h3>
+      <canvas id="temperaturePlot"></canvas>
+      <p class="plot-caption">
+        Cell temperature increases with current density as internally generated
+        heat grows faster than cooling capacity. Cooling effectiveness controls
+        the slope of this temperature rise.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 6: THERMAL LIMITS -->
+  <div class="explain-block highlight full">
+    <p>
+      Thermal limits are hard constraints, not performance targets. Above certain
+      temperatures, membranes degrade, catalysts lose activity, and material
+      lifetimes shorten rapidly.
+    </p>
+
+    <p>
+      Safe operation therefore requires that current density be limited such
+      that the steady-state temperature remains below allowable thresholds.
+    </p>
+  </div>
+
+  <!-- PART 7: BRIDGE TO SYSTEM CONSTRAINTS -->
+  <div class="stage-text full">
+    <p>
+      Once thermal limits are reached, the system can no longer follow purely
+      electrical optimization. Even if additional power and capacity are
+      available, temperature constraints prevent further increases in current.
+    </p>
+
+    <p>
+      In the following sections, we examine how stack scaling, cooling design,
+      and renewable integration interact with this thermal balance to define
+      the feasible operating envelope of the full hydrogen production system.
+    </p>
+  </div>
+
+</section>
+
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>3. From a Single Cell to an Electrolyzer Stack</h2>
+
+  <!-- PART 1: WHY STACKS EXIST -->
+  <div class="stage-text full">
+    <h3>Why Industrial Electrolyzers Use Stacks</h3>
+
+    <p>
+      Industrial electrolyzers are not single cells. They consist of many
+      electrochemical cells connected electrically in series to form a stack.
+      This configuration allows hydrogen production to be scaled to industrial
+      levels while preserving the same underlying electrochemical behavior at
+      the cell level.
+    </p>
+
+    <p>
+      Importantly, stacking cells does not change the physics of water
+      electrolysis. Each individual cell still obeys the same voltage–current
+      relationship, generates heat in the same way, and produces hydrogen
+      according to Faraday’s law.
+    </p>
+  </div>
+
+  <!-- PART 2: WHAT SCALES -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> Stack-level behavior emerges directly from
+      cell-level physics, amplified by scale. Nothing new is introduced —
+      existing physical relationships are repeated many times.
+    </p>
+  </div>
+
+  <!-- PART 3: VOLTAGE SCALING -->
+  <div class="stage-text full">
+    <h3>How Voltage Scales in a Stack</h3>
+
+    <p>
+      Because cells in a stack are connected in series, the total stack voltage
+      is simply the sum of the individual cell voltages. If each cell operates
+      at the same current density, the stack voltage increases linearly with the
+      number of cells.
+    </p>
+  </div>
+
+  <!-- STACK SCALING EQUATION -->
+  <div class="equation-band full">
+    <div class="equation-block">
+      \[
+      V_{\text{stack}} = N_{\text{cells}} \, V_{\text{cell}}
+      \]
+      <p class="equation-caption">
+        Stack voltage increases linearly as identical cells are connected in series
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 4: INTERPRETATION -->
+  <div class="stage-text full">
+    <p>
+      While the magnitude of the voltage increases with the number of cells,
+      the *shape* of the voltage–current relationship remains unchanged. All
+      nonlinear behavior introduced by activation and ohmic losses is inherited
+      directly from the single-cell response.
+    </p>
+
+    <p>
+      As a result, increasing stack size does not make high-current operation
+      easier — it simply raises the absolute voltage and power involved.
+    </p>
+  </div>
+
+  <!-- PRIMARY STACK VOLTAGE PLOT -->
+  <div class="plot-band full">
+
+    <div class="plot-card wide">
+      <h3>Stack Voltage vs Current Density</h3>
+      <canvas id="stackVoltagePlot"></canvas>
+      <p class="plot-caption">
+        Stack voltage scales proportionally with the number of cells while
+        retaining the same nonlinear dependence on current density imposed by
+        electrochemical losses.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 5: POWER SCALING -->
+  <div class="stage-text full">
+    <h3>Why Power Becomes a System-Level Challenge</h3>
+
+    <p>
+      Electrical power consumed by the stack is given by the product of stack
+      voltage and current. Because both voltage and current increase with
+      operating intensity and scale, stack power grows rapidly as systems
+      become larger.
+    </p>
+
+    <p>
+      This rapid growth in power explains why power electronics, grid
+      integration, and thermal management become dominant engineering concerns
+      at the stack and plant level.
+    </p>
+  </div>
+
+  <!-- SECONDARY STACK PLOTS -->
+  <div class="plot-row two full">
+
+    <div class="plot-card">
+      <h3>Stack Power vs Current Density</h3>
+      <canvas id="stackPowerPlot"></canvas>
+      <p class="plot-caption">
+        Electrical power increases rapidly at the stack level as both voltage
+        and current scale, driving system-level thermal and electrical design
+        requirements.
+      </p>
+    </div>
+
+    <div class="plot-card">
+      <h3>Hydrogen Production vs Current Density</h3>
+      <canvas id="stackHydrogenPlot"></canvas>
+      <p class="plot-caption">
+        Hydrogen production scales linearly with current density and the number
+        of cells, directly linking electrochemical operation to industrial
+        hydrogen output.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 6: WHAT STACKING DOES AND DOES NOT SOLVE -->
+  <div class="explain-block highlight full">
+    <p>
+      Stack scaling increases hydrogen production capacity, but it does not
+      remove electrochemical or thermal constraints. Voltage losses, heat
+      generation, and efficiency penalties are all multiplied by scale.
+    </p>
+
+    <p>
+      Larger stacks therefore amplify both productive output and the
+      consequences of irreversible losses.
+    </p>
+  </div>
+
+  <!-- PART 7: BRIDGE TO NEXT SECTION -->
+  <div class="stage-text full">
+    <p>
+      At the stack level, system behavior begins to encounter hard external
+      constraints. Electrical infrastructure limits available power, cooling
+      systems limit heat rejection, and component ratings impose safe operating
+      envelopes.
+    </p>
+
+    <p>
+      In the next section, we examine how cooling effectiveness and thermal
+      constraints impose explicit operating limits on stack power and define
+      the boundary between feasible and infeasible operation.
+    </p>
+  </div>
+
+</section>
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>4. Cooling as a Hard Constraint</h2>
+
+  <!-- PART 1: SETTING THE LIMIT -->
+  <div class="stage-text full">
+    <h3>Why Cooling Ultimately Limits Operation</h3>
+
+    <p>
+      Heat generated inside the electrolyzer must be continuously removed by
+      the cooling system. While electrochemical considerations may favor higher
+      current densities to increase hydrogen production, cooling capacity
+      ultimately determines whether a given operating point is physically
+      achievable.
+    </p>
+
+    <p>
+      Cooling systems do not merely influence performance — they define the
+      boundary between feasible and infeasible operation. Once heat can no
+      longer be removed fast enough, temperature rises without bound.
+    </p>
+  </div>
+
+  <!-- KEY IDEA CALLOUT -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> Cooling imposes a hard physical limit. Beyond
+      this limit, no amount of control, optimization, or additional power can
+      produce a safe steady operating point.
+    </p>
+  </div>
+
+  <!-- PART 2: TEMPERATURE AS A CONSTRAINT -->
+  <div class="stage-text full">
+    <p>
+      All electrolyzer components — membranes, catalysts, seals, and structural
+      materials — have maximum allowable operating temperatures. Exceeding
+      these limits leads to rapid degradation, loss of performance, and
+      potentially unsafe operation.
+    </p>
+
+    <p>
+      As a result, electrolyzers are designed to operate below a specified
+      maximum cell temperature. This requirement converts thermal behavior
+      from a continuous trade-off into a strict constraint.
+    </p>
+  </div>
+
+  <!-- TEMPERATURE LIMIT EQUATION -->
+  <div class="equation-band full">
+    <div class="equation-block">
+      \[
+      T_{\text{cell}} \le T_{\text{max}}
+      \]
+      <p class="equation-caption">
+        Cooling enforces a hard upper limit on allowable operating temperature
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 3: WHAT HAPPENS AT THE LIMIT -->
+  <div class="stage-text full">
+    <p>
+      At low and moderate current densities, the cooling system can reject the
+      heat generated inside the cell, allowing a stable steady-state
+      temperature to exist. As current density increases, heat generation
+      rises and the steady-state temperature moves closer to the allowable
+      maximum.
+    </p>
+
+    <p>
+      Beyond a critical current density, no steady temperature solution exists
+      below the safe limit. At this point, continued operation would cause the
+      cell temperature to exceed material limits, making the operating point
+      physically infeasible.
+    </p>
+  </div>
+
+  <!-- STAGE 4 PLOT -->
+  <div class="plot-band full">
+
+    <div class="plot-card wide">
+      <h3>Thermal Feasibility Limit</h3>
+      <canvas id="thermalLimitPlot"></canvas>
+      <p class="plot-caption">
+        The horizontal line indicates the maximum allowable cell temperature.
+        Operation beyond this intersection is thermally infeasible, regardless
+        of available power, electrolyzer capacity, or control strategy.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 4: WHY CONTROL CANNOT FIX THIS -->
+  <div class="explain-block highlight full">
+    <p>
+      Thermal infeasibility cannot be resolved through better control or
+      optimization. Once the cooling limit is reached, the only viable options
+      are to reduce current density or redesign the cooling system.
+    </p>
+
+    <p>
+      This distinction separates soft performance trade-offs from hard physical
+      constraints that define the feasible operating envelope.
+    </p>
+  </div>
+
+  <!-- PART 5: BRIDGE TO SYSTEM-LEVEL LIMITING REGIMES -->
+  <div class="stage-text full">
+    <p>
+      Cooling limits are one of several independent constraints that shape
+      system operation. Electrical capacity, renewable availability, and
+      thermal rejection each impose their own boundaries.
+    </p>
+
+    <p>
+      In the following sections, we combine these constraints to identify which
+      limit dominates under different operating conditions and how these
+      regimes define the overall feasible envelope explored in the System
+      Explorer.
+    </p>
+  </div>
+
+</section>
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>5. Control and Protection Logic</h2>
+
+  <!-- PART 1: WHY CONTROL IS NEEDED -->
+  <div class="stage-text full">
+    <h3>Why Electrolyzers Cannot Operate Freely</h3>
+
+    <p>
+      Real electrolyzers do not operate at arbitrary points on the physical
+      performance curves defined by electrochemistry and thermal behavior.
+      Although power availability or operator demand may request aggressive
+      operating conditions, the system must always remain within safe limits.
+    </p>
+
+    <p>
+      For this reason, electrolyzers are equipped with control and protection
+      logic that continuously monitors key variables such as voltage,
+      temperature, and current ramp rate.
+    </p>
+  </div>
+
+  <!-- KEY IDEA CALLOUT -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> Control systems do not create new feasible
+      operating points. They select the safest possible point within the
+      existing physical constraints.
+    </p>
+  </div>
+
+  <!-- PART 2: REQUESTED VS APPLIED OPERATION -->
+  <div class="stage-text full">
+    <p>
+      At any moment, the system may receive a requested operating point driven
+      by available electrical power, renewable input, or external setpoints.
+      This requested current density reflects what the system would like to
+      apply in the absence of constraints.
+    </p>
+
+    <p>
+      The applied operating point, however, is determined after enforcing all
+      active limits. When voltage, temperature, or ramp-rate constraints are
+      approached, the control system automatically reduces current to prevent
+      unsafe operation.
+    </p>
+  </div>
+
+  <!-- CONTROL LOGIC EQUATION -->
+  <div class="equation-band full">
+    <div class="equation-block">
+      \[
+      i_{\text{applied}} =
+      f_{\text{control}}
+      \bigl(
+        i_{\text{requested}},\,
+        T,\,
+        V
+      \bigr)
+      \]
+      <p class="equation-caption">
+        Control logic maps requested operation to a safe, feasible applied current
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 3: DERATING AS A FEATURE -->
+  <div class="stage-text full">
+    <p>
+      When a constraint becomes active, the control system does not shut the
+      electrolyzer down abruptly. Instead, it derates operation smoothly,
+      reducing current density to maintain operation within allowable limits.
+    </p>
+
+    <p>
+      This derating trades instantaneous hydrogen production for equipment
+      safety, reliability, and long-term performance. It is therefore a
+      deliberate design feature, not a failure mode.
+    </p>
+  </div>
+
+  <!-- STAGE 5 PLOT -->
+  <div class="plot-band full">
+
+    <div class="plot-card wide">
+      <h3>Requested vs Applied Current Density</h3>
+      <canvas id="controlPlot"></canvas>
+      <p class="plot-caption">
+        The dashed curve represents the current density requested by available
+        power or external demand. The solid curve shows the reduced current
+        actually applied after enforcing voltage, temperature, and protection
+        limits.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 4: WHY CONTROL CANNOT OVERRIDE PHYSICS -->
+  <div class="explain-block highlight full">
+    <p>
+      Control logic cannot override physical limits. If an operating point is
+      thermally or electrically infeasible, no control strategy can make it
+      safe.
+    </p>
+
+    <p>
+      Instead, control systems ensure that the electrolyzer operates at the
+      maximum safe point allowed by the most restrictive active constraint.
+    </p>
+  </div>
+
+  <!-- PART 5: BRIDGE TO SYSTEM-LEVEL REGIMES -->
+  <div class="stage-text full">
+    <p>
+      As operating conditions change, different constraints become active.
+      At low power, operation may be limited by renewable availability. At
+      higher power, electrical capacity or thermal limits may dominate.
+    </p>
+
+    <p>
+      In the next section, we combine all active constraints to identify
+      distinct limiting regimes and map the feasible operating envelope of the
+      complete hydrogen production system.
+    </p>
+  </div>
+
+</section>
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>6. Renewable Power Integration</h2>
+
+  <!-- PART 1: VARIABILITY AS A GIVEN -->
+  <div class="stage-text full">
+    <h3>Why Renewable Power Changes the Operating Problem</h3>
+
+    <p>
+      When powered by renewable energy sources such as solar or wind, the
+      electrolyzer no longer receives a steady, dispatchable power input.
+      Instead, available power varies continuously over time according to
+      environmental conditions.
+    </p>
+
+    <p>
+      The electrolyzer must therefore respond dynamically to changing power
+      availability while still respecting all electrochemical, thermal, and
+      protection constraints developed in the previous sections.
+    </p>
+  </div>
+
+  <!-- KEY IDEA CALLOUT -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> The system can only absorb renewable power that
+      lies within its feasible operating envelope. Availability alone does not
+      guarantee usability.
+    </p>
+  </div>
+
+  <!-- PART 2: IDEALIZED RENEWABLE PROFILE -->
+  <div class="stage-text full">
+    <p>
+      To illustrate this interaction, an idealized daily solar power profile is
+      often used. Power rises smoothly in the morning, reaches a peak near
+      midday, and falls again toward evening.
+    </p>
+
+    <p>
+      This simplified profile captures the essential feature of renewable
+      generation: power availability varies continuously and predictably over
+      time.
+    </p>
+  </div>
+
+  <!-- RENEWABLE POWER EQUATION -->
+  <div class="equation-band full">
+    <div class="equation-block">
+      \[
+      P_{\text{solar}}(t) = P_{\text{peak}}
+      \sin\!\left(\frac{\pi t}{T_{\text{day}}}\right)
+      \]
+      <p class="equation-caption">
+        Idealized daily solar power profile used to illustrate variable
+        renewable availability
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 3: FEASIBILITY FILTER -->
+  <div class="stage-text full">
+    <p>
+      At each moment in time, the control system compares the power requested
+      by the renewable source with the maximum power the electrolyzer can safely
+      absorb. This maximum is determined by voltage limits, thermal constraints,
+      and control logic.
+    </p>
+
+    <p>
+      If available renewable power exceeds the feasible operating limit, the
+      electrolyzer cannot absorb the excess without violating physical or
+      safety constraints.
+    </p>
+  </div>
+
+  <!-- STAGE 6 PLOT -->
+  <div class="plot-band full">
+
+    <div class="plot-card wide">
+      <h3>Renewable Power vs Electrolyzer Power Used</h3>
+      <canvas id="renewablePlot"></canvas>
+      <p class="plot-caption">
+        The dashed curve represents available renewable power over the day.
+        The solid curve shows the power actually absorbed by the electrolyzer
+        after enforcing electrochemical, thermal, and control constraints.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 4: CURTAILMENT EXPLAINED -->
+  <div class="explain-block highlight full">
+    <p>
+      Curtailment occurs whenever available renewable power exceeds what the
+      electrolyzer can safely absorb. This excess energy is not converted to
+      hydrogen and is therefore lost from the perspective of the electrolyzer.
+    </p>
+
+    <p>
+      Curtailment is not a control failure or inefficiency — it is the inevitable
+      result of finite electrolyzer capacity interacting with variable
+      renewable supply.
+    </p>
+  </div>
+
+  <!-- PART 5: SYSTEM-LEVEL CONSEQUENCES -->
+  <div class="stage-text full">
+    <p>
+      The balance between renewable availability and system feasibility governs
+      real-world hydrogen production. Increasing renewable capacity without
+      increasing electrolyzer or cooling capacity leads to higher curtailment.
+    </p>
+
+    <p>
+      Conversely, oversizing the electrolyzer relative to renewable supply
+      reduces curtailment but lowers utilization. These trade-offs define the
+      design space explored in the System Explorer.
+    </p>
+  </div>
+
+  <!-- BRIDGE TO KPI AND DESIGN TRADE STUDIES -->
+  <div class="stage-text full">
+    <p>
+      In the final sections, we quantify how these interactions affect hydrogen
+      yield, efficiency, capacity factor, and overall system performance, and
+      use them to compare alternative design choices.
+    </p>
+  </div>
+
+</section>
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>7. Hydrogen Production and System Performance</h2>
+
+  <!-- PART 1: WHY KPIs MATTER -->
+  <div class="stage-text full">
+    <h3>From Physical Limits to System Outcomes</h3>
+
+    <p>
+      The combined effects of electrochemistry, thermal constraints, control
+      logic, and renewable variability ultimately determine how much hydrogen
+      can be produced and how efficiently the system operates.
+    </p>
+
+    <p>
+      While earlier sections focused on physical feasibility, real systems are
+      evaluated using performance metrics that summarize these interactions
+      into quantities relevant for design, comparison, and economics.
+    </p>
+  </div>
+
+  <!-- KEY IDEA CALLOUT -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> System performance metrics are not independent
+      tuning knobs. Each one emerges from physical constraints imposed earlier
+      in the model.
+    </p>
+  </div>
+
+  <!-- PART 2: KPI CONTEXT -->
+  <div class="stage-text full">
+    <p>
+      The metrics shown below capture different aspects of system behavior:
+      total hydrogen output, energy efficiency, utilization of installed
+      capacity, and effectiveness in using available renewable power.
+    </p>
+
+    <p>
+      Together, they provide a compact but complete description of system
+      performance under a given design and operating strategy.
+    </p>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="kpi-grid">
+
+    <div class="kpi-card">
+      <span class="kpi-value" id="kpi-h2"></span>
+      <span class="kpi-label">Hydrogen Produced (kg/day)</span>
+      <p class="kpi-caption">
+        Total hydrogen generated after accounting for all electrochemical,
+        thermal, and control constraints.
+      </p>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-value" id="kpi-eff"></span>
+      <span class="kpi-label">Specific Energy (kWh/kg)</span>
+      <p class="kpi-caption">
+        Electrical energy required per kilogram of hydrogen. Increases when
+        operation is forced to higher voltages or curtailed.
+      </p>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-value" id="kpi-cf"></span>
+      <span class="kpi-label">Capacity Factor</span>
+      <p class="kpi-caption">
+        Fraction of time the electrolyzer operates near its rated capacity,
+        reflecting underutilization due to renewable variability or constraints.
+      </p>
+    </div>
+
+    <div class="kpi-card">
+      <span class="kpi-value" id="kpi-re"></span>
+      <span class="kpi-label">Renewable Utilization</span>
+      <p class="kpi-caption">
+        Fraction of available renewable energy successfully converted into
+        hydrogen rather than curtailed.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- PART 3: INTERPRETATION -->
+  <div class="stage-text full">
+    <p>
+      These metrics reveal trade-offs that are not visible at the component
+      level. For example, increasing renewable capacity may raise hydrogen
+      output but reduce utilization if electrolyzer or cooling limits become
+      active.
+    </p>
+
+    <p>
+      Similarly, aggressive operation may increase short-term production while
+      degrading efficiency due to higher voltage and thermal losses.
+    </p>
+  </div>
+
+  <!-- TRANSITION TO DESIGN TRADE STUDIES -->
+  <div class="explain-block highlight full">
+    <p>
+      The purpose of the System Explorer is to make these trade-offs visible.
+      In the final stage, we use these performance metrics to compare design
+      choices and identify limiting regimes.
+    </p>
+  </div>
+
+</section>
+
+
+<section class="model-stage">
+
+  <!-- STAGE TITLE -->
+  <h2>8. Design Trade Studies and Scaling Insights</h2>
+
+  <!-- INTRODUCTION -->
+  <div class="stage-text full">
+    <p>
+      At the system level, performance does not improve linearly with design
+      effort. Increasing renewable capacity, electrolyzer size, or operating
+      aggressiveness each targets a different bottleneck — and only helps until
+      another constraint becomes active.
+    </p>
+
+    <p>
+      This section explores how design choices interact with physical limits,
+      revealing where additional investment produces meaningful gains and where
+      it leads to diminishing returns.
+    </p>
+  </div>
+
+  <!-- KEY IDEA -->
+  <div class="explain-block highlight full">
+    <p>
+      <strong>Key idea:</strong> System performance is governed by the *most
+      restrictive active constraint*. Improving a non-limiting component has
+      little or no effect on output.
+    </p>
+  </div>
+
+  <!-- ===== TRADE STUDY 8.1 ===== -->
+  <div class="stage-text full">
+    <h3>8.1 Renewable Oversizing</h3>
+
+    <p>
+      Renewable oversizing increases the amount of power available to the
+      electrolyzer, raising potential hydrogen production during high-resource
+      periods. However, the electrolyzer can only absorb power up to its
+      electrochemical, thermal, and control limits.
+    </p>
+
+    <p>
+      Once these limits are reached, additional renewable power is curtailed
+      rather than converted into hydrogen. Beyond this point, further oversizing
+      produces diminishing returns.
+    </p>
+  </div>
+
+  <div class="plot-card">
+    <h3>Renewable Oversizing</h3>
+    <div class="chart-wrap">
+      <canvas id="oversizingPlot"></canvas>
+    </div>
+    <p class="plot-caption">
+      Hydrogen production initially increases with renewable oversizing, then
+      saturates as system constraints prevent further power absorption.
+    </p>
+  </div>
+
+  <!-- ===== TRADE STUDY 8.2 ===== -->
+  <div class="stage-text full">
+    <h3>8.2 Electrolyzer Capacity Oversizing</h3>
+
+    <p>
+      Increasing electrolyzer capacity allows more renewable power to be
+      absorbed, reducing curtailment and increasing hydrogen output — but only
+      if sufficient renewable energy is available.
+    </p>
+
+    <p>
+      If renewable supply is limited, additional electrolyzer capacity remains
+      underutilized, reducing capacity factor without improving production.
+    </p>
+  </div>
+
+  <div class="plot-card">
+    <h3>Electrolyzer Oversizing</h3>
+    <div class="chart-wrap">
+      <canvas id="capacityPlot"></canvas>
+    </div>
+    <p class="plot-caption">
+      Hydrogen output increases with electrolyzer size until renewable
+      availability becomes the dominant constraint.
+    </p>
+  </div>
+
+  <!-- ===== TRADE STUDY 8.3 ===== -->
+  <div class="stage-text full">
+    <h3>8.3 Current Density Trade-Off</h3>
+
+    <p>
+      Current density determines how aggressively the electrolyzer is operated.
+      Higher current density increases instantaneous hydrogen production but
+      raises voltage losses, heat generation, and efficiency penalties.
+    </p>
+
+    <p>
+      Thermal and voltage constraints ultimately cap the allowable current
+      density, defining a narrow band of optimal operation.
+    </p>
+  </div>
+
+  <div class="plot-card">
+    <h3>Current Density Trade-Off</h3>
+    <div class="chart-wrap">
+      <canvas id="currentDensityPlot"></canvas>
+    </div>
+    <p class="plot-caption">
+      Aggressive operation increases production but is limited by thermal and
+      efficiency constraints, revealing an optimal operating window.
+    </p>
+  </div>
+
+  <!-- LIMITING REGIMES SUMMARY -->
+  <div class="explain-block highlight full">
+    <p>
+      Together, these trade studies define distinct operating regimes:
+      <strong>renewable-limited</strong>, <strong>capacity-limited</strong>, and
+      <strong>thermal-limited</strong>. System behavior shifts sharply as the
+      active constraint changes.
+    </p>
+  </div>
+
+  <!-- BRIDGE TO SYSTEM EXPLORER -->
+  <div class="stage-text full">
+    <p>
+      The System Explorer allows these trade-offs to be explored interactively.
+      By adjusting design and operating parameters, you can observe how the
+      operating point moves between limiting regimes and how performance metrics
+      respond.
+    </p>
+
+    <p>
+      This interactive view reveals not just how much hydrogen can be produced,
+      but <em>why</em> the system behaves the way it does.
+    </p>
+  </div>
+
+</section>
+
+
+
+
+  </main>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="model-journey.js"></script>
+<script src="stage1.js"></script>
+
+</body>
+</html>
+
+
+
+
