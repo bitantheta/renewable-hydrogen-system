@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>From Sunlight to Hydrogen</title>
   <link rel="stylesheet" href="page1.css">
 </head>
@@ -12,62 +13,89 @@
 <nav class="nav">
   <a class="active">How Green Hydrogen Is Made</a>
   <a href="explorer.html">Explore the Model →</a>
+  <a href="model-journey.html">Building the Model →</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <h1>From Sunlight to Hydrogen</h1>
-  <p>
-    A visual explanation of how renewable energy is converted into green hydrogen,
-    highlighting the major subsystems involved in the process.
-  </p>
+  <div class="text-block">
+    <h1>From Sunlight to Hydrogen — Quantified</h1>
+
+    <p class="hero-lead">
+      An interactive, physics-constrained view of how renewable energy is
+      converted into green hydrogen — and where real engineering limits appear.
+    </p>
+
+    <p class="hero-sub">
+      Not a schematic. Not a simplification. A system model that exposes
+      electrochemical, thermal, and capacity trade-offs.
+    </p>
+  </div>
 </section>
+
 
 <!-- SYSTEM DIAGRAM -->
 <section class="system">
 
   <div class="component solar" data-key="solar">
-    <img src="assets/images/solar.png" alt="Solar Energy">
+    <img src="images/solar.png" alt="Solar energy">
     <span>Solar Energy</span>
+    <small class="component-note">Intermittent supply</small>
     <div class="connector right">Electrical Power</div>
   </div>
 
   <div class="component power" data-key="power">
-    <img src="assets/images/power.png">
+    <img src="images/power.png" alt="Power conversion">
     <span>Power Conversion</span>
+    <small class="component-note">DC conditioning & limits</small>
     <div class="connector right">DC Power</div>
   </div>
 
   <div class="component electrolyzer" data-key="electrolyzer">
-    <img src="assets/images/electrolyzer.png">
+    <img src="images/electrolyzer.png" alt="Electrolysis">
     <span>Electrolysis</span>
+    <small class="component-note">Faraday-limited reaction</small>
 
     <div class="connector right">Hydrogen Flow</div>
     <div class="connector down">Heat Rejection</div>
   </div>
 
   <div class="component cooling" data-key="cooling">
-    <img src="assets/images/cooling.png">
+    <img src="images/cooling.png" alt="Cooling system">
     <span>Cooling</span>
+    <small class="component-note">Thermal ceiling</small>
   </div>
 
   <div class="component hydrogen" data-key="hydrogen">
-    <img src="assets/images/hydrogen.png">
+    <img src="images/hydrogen.png" alt="Hydrogen output">
     <span>Hydrogen</span>
+    <small class="component-note">Output & efficiency</small>
   </div>
 
+</section>
+
+<!-- WHY CONSTRAINTS MATTER -->
+<section class="insight">
+  <div class="text-block">
+    <h3>Why constraints matter</h3>
+    <p>
+      Increasing renewable capacity does not always increase hydrogen output.
+      Thermal limits, stack sizing, and electrical capacity often dominate
+      system behavior.
+    </p>
+  </div>
 </section>
 
 
 <!-- EXPLANATION PANEL -->
 <section class="explanation" id="explanation">
-  Click on any component above to understand its role in the hydrogen
-  production process.
+  Click on any component above to understand its physical role and
+  how it constrains hydrogen production.
 </section>
 
 <!-- CTA -->
 <section class="cta">
-  <a href="explorer.html">Play with the real engineering model →</a>
+  <a href="explorer.html">Explore the system limits →</a>
 </section>
 
 <script src="page1.js"></script>
