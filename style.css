@@ -155,3 +155,60 @@ svg {
 
 }
 
+/* ============================
+   MOBILE FIX — COMPACT SPACING
+   ============================ */
+@media (max-width: 768px) {
+
+  /* Navigation */
+  .nav {
+    padding: 12px 16px;
+  }
+
+  .nav a {
+    margin-right: 12px;
+    font-size: 0.95rem;
+  }
+
+  /* Header / hero */
+  .header {
+    padding: 24px 16px 8px;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header p {
+    margin-bottom: 12px;
+    max-width: 100%;
+  }
+
+  /* Canvas section (SVG area) */
+  .canvas {
+    padding: 12px 16px;
+  }
+
+  svg {
+    height: 260px; /* KEY FIX */
+  }
+
+  /* Explanation box */
+  .explain-box {
+    margin: 16px;
+    padding: 14px;
+    font-size: 0.95rem;
+  }
+
+  /* CTA */
+  .cta {
+    padding: 16px;
+  }
+
+  .cta a {
+    font-size: 0.95rem;
+  }
+
+}
+
+
