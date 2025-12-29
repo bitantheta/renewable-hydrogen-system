@@ -385,6 +385,44 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+
+  /* Tighten system cards */
+  .component {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .component img {
+    width: 56px;
+    margin-bottom: 6px;
+  }
+
+  .component span {
+    font-size: 1rem;
+  }
+
+  /* Explanation box cleanup */
+  .explanation {
+    max-width: 92%;
+    border-left: none;
+    border-top: 4px solid #6ee7b7;
+    text-align: left;
+  }
+
+  /* Navigation cleanup */
+  .nav {
+    padding: 12px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav a {
+    font-size: 0.9rem;
+  }
+}
+
 
 
 
