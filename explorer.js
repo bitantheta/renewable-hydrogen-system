@@ -1,3 +1,10 @@
+// =====================================================
+// SYSTEM EXPLORER — ENGINEERING-GRADE INTERACTIVE MODEL
+// =====================================================
+
+// -----------------------------
+// DOM REFERENCES
+// -----------------------------
 const solar = document.getElementById("solar");
 const capacity = document.getElementById("capacity");
 const stack = document.getElementById("stack");
@@ -14,13 +21,26 @@ const loss = document.getElementById("loss");
 const limiter = document.getElementById("limiter");
 const interpretation = document.getElementById("interpretation");
 
-const REF_CAPACITY_MW = 10;
-let data = [];
+// -----------------------------
+// CONSTANTS (MODEL ASSUMPTIONS)
+// -----------------------------
+const REF_CAPACITY_MW = 10;     // reference electrolyzer size
+const T_MAX = 80;              // °C — safe steady-state temperature ceiling
+const REGIME_COLORS = {
+  solar: "#22c55e",
+  capacity: "#f97316",
+  thermal: "#ef4444"
+};
 
+let envelopeData = [];
+
+// -----------------------------
+// LOAD PERFORMANCE ENVELOPE
+// -----------------------------
 fetch("project8_oversizing.json")
   .then(r => r.json())
   .then(d => {
-    data = d;
+    envelopeData = d;
     update();
   });
 
@@ -28,8 +48,12 @@ fetch("project8_oversizing.json")
   s.addEventListener("input", update)
 );
 
+// =====================================================
+// MAIN UPDATE LOOP
+// =====================================================
 function update() {
 
+  // ---- Read sliders ----
   const s = +solar.value;
   const cap = +capacity.value;
   const stk = +stack.value;
@@ -40,70 +64,58 @@ function update() {
   stackVal.textContent = stk.toFixed(2);
   coolVal.textContent = cool.toFixed(2);
 
-  const interp = interpolate(s);
+  // ---- Envelope interpolation (physics baseline) ----
+  const env = interpolateEnvelope(s);
 
-  const stackPenalty = Math.min(1, 1 / stk);
-  const thermalPenalty = Math.min(1, cool);
-  const feasibleFactor = stackPenalty * thermalPenalty;
+  // ---- Constraint modifiers ----
+  const stackFactor = Math.min(1, 1 / stk);
+  const thermalFactor = Math.min(1, cool);
+  const feasibilityFactor = stackFactor * thermalFactor;
 
-  const h2Solar = interp.h2 * feasibleFactor;
-  const h2Cap = interp.h2 * (cap / REF_CAPACITY_MW);
-  const h2Out = Math.min(h2Solar, h2Cap);
+  // ---- Constraint-limited hydrogen ----
+  const h2_from_solar = env.h2 * feasibilityFactor;
+  const h2_from_capacity = env.h2 * (cap / REF_CAPACITY_MW);
+  const h2_out = Math.min(h2_from_solar, h2_from_capacity);
 
-  h2.textContent = h2Out.toFixed(2);
-  eff.textContent = (interp.kwh / Math.max(h2Out / interp.h2, 0.5)).toFixed(1);
-  loss.textContent = ((1 - h2Out / interp.h2) * 100).toFixed(1) + " %";
+  // ---- Identify active constraint ----
+  let regime = "solar";
+  if (h2_from_capacity < h2_from_solar) regime = "capacity";
+  else if (feasibilityFactor < 0.98) regime = "thermal";
 
-  let limiting = "Solar availability";
-  if (h2Cap < h2Solar) limiting = "Electrolyzer capacity";
-  else if (feasibleFactor < 0.98) limiting = "Thermal / stack";
+  // ---- KPIs (operating point only) ----
+  h2.textContent = h2_out.toFixed(2);
 
-  limiter.textContent = limiting;
+  const utilization = h2_out / env.h2;
+  const effective_kwh = env.kwh / Math.max(utilization, 0.4);
+  eff.textContent = effective_kwh.toFixed(1);
 
-  let explanation = "";
+  loss.textContent = ((1 - utilization) * 100).toFixed(1) + " %";
 
-  if (limiting === "Electrolyzer capacity") {
-  explanation = `
-  What this means right now:
-  
-  Your renewable supply could produce more hydrogen, but the electrolyzer is too small to process all the available power.
-  The orange dashed line shows this hard limit.
-  
-  Increasing electrolyzer capacity would allow the operating point to move upward.
-  Increasing solar oversizing would not help until capacity is increased.
-  `;
-  }
-  else if (limiting === "Thermal / stack") {
-  explanation = `
-  What this means right now:
-  
-  The system is limited by internal constraints such as stack scaling or cooling.
-  Even though renewable power and electrolyzer capacity are available, thermal limits prevent higher operation.
-  
-  Improving cooling or stack configuration would move the operating point closer to the green envelope.
-  `;
-  }
-  else {
-  explanation = `
-  What this means right now:
-  
-  Hydrogen production is limited by renewable availability.
-  The electrolyzer and cooling system are capable of handling more power, but not enough energy is coming from the source.
-  
-  Increasing solar oversizing would move the operating point upward along the green curve.
-  Increasing electrolyzer capacity or cooling would not change output in this state.
-  `;
-  }
+  limiter.textContent =
+    regime === "solar" ? "Renewable availability" :
+    regime === "capacity" ? "Electrolyzer capacity" :
+    "Thermal / stack limit";
 
-  interpretation.textContent = explanation.trim();
+  limiter.style.color = REGIME_COLORS[regime];
 
+  interpretation.textContent = explanationText(regime);
 
-  drawPlot(s, h2Out, h2Cap);
+  // ---- Draw plots ----
+  drawMainPlot(s, h2_out, h2_from_capacity, regime);
+  drawPowerPlot(cap, stk, cool);
+  drawTempPlot(stk, cool);
+  drawEffPlot();
+  drawLossPlot(utilization, stk, cool);
+  drawRegimePlot(stk, cool);
 }
 
-function interpolate(x) {
-  for (let i = 0; i < data.length - 1; i++) {
-    const a = data[i], b = data[i + 1];
+// =====================================================
+// ENVELOPE INTERPOLATION
+// =====================================================
+function interpolateEnvelope(x) {
+  for (let i = 0; i < envelopeData.length - 1; i++) {
+    const a = envelopeData[i];
+    const b = envelopeData[i + 1];
     if (x >= a.oversize_ratio && x <= b.oversize_ratio) {
       const w = (x - a.oversize_ratio) /
                 (b.oversize_ratio - a.oversize_ratio);
@@ -113,43 +125,143 @@ function interpolate(x) {
       };
     }
   }
-  return {
-    h2: data[data.length - 1].h2_kg_day,
-    kwh: data[data.length - 1].kwh_per_kg
-  };
+  return envelopeData[envelopeData.length - 1];
 }
 
-function drawPlot(x, y, cap) {
+// =====================================================
+// PLOTS
+// =====================================================
 
-  const xs = data.map(d => d.oversize_ratio);
-  const ys = data.map(d => d.h2_kg_day);
+// ---- Primary envelope plot ----
+function drawMainPlot(x, y, capLimit, regime) {
+  const xs = envelopeData.map(d => d.oversize_ratio);
+  const ys = envelopeData.map(d => d.h2_kg_day);
 
-  Plotly.newPlot("plot", [
+  Plotly.react("plot", [
     {
-      x: xs, y: ys,
-      mode: "lines+markers",
-      name: "Project 8 Envelope",
-      line: { color: "#22c55e" }
+      x: xs,
+      y: ys,
+      mode: "lines",
+      name: "Physical production envelope",
+      line: { dash: "dash", color: "#22c55e" }
     },
     {
       x: [Math.min(...xs), Math.max(...xs)],
-      y: [cap, cap],
+      y: [capLimit, capLimit],
       mode: "lines",
-      name: "Capacity Limit",
-      line: { dash: "dot", color: "#f97316" }
+      name: "Capacity limit",
+      line: { dash: "dot", color: REGIME_COLORS.capacity }
     },
     {
-      x: [x], y: [y],
+      x: [x],
+      y: [y],
       mode: "markers",
-      name: "Operating Point",
-      marker: { size: 12, color: "#22c55e" }
+      name: "Operating point",
+      marker: { size: 14, color: REGIME_COLORS[regime] }
     }
+  ], baseLayout(
+    "Solar oversizing ratio",
+    "Hydrogen production (kg/day)"
+  ));
+}
+
+// ---- Power constraints ----
+function drawPowerPlot(cap, stk, cool) {
+  const xs = envelopeData.map(d => d.oversize_ratio);
+  const solarP = xs.map(x => x * REF_CAPACITY_MW);
+  const capP = xs.map(() => cap);
+  const thermalP = xs.map(() => cap * stk * cool);
+
+  Plotly.react("powerPlot", [
+    { x: xs, y: solarP, name: "Available renewable power", line: { color: REGIME_COLORS.solar }},
+    { x: xs, y: capP, name: "Electrolyzer capacity", line: { dash: "dot", color: REGIME_COLORS.capacity }},
+    { x: xs, y: thermalP, name: "Thermal absorption limit", line: { dash: "dash", color: REGIME_COLORS.thermal }}
+  ], baseLayout("Solar oversizing", "Power (MW)"));
+}
+
+// ---- Temperature (clipped at Tmax) ----
+function drawTempPlot(stk, cool) {
+  const xs = envelopeData.map(d => d.oversize_ratio);
+  const rawTemp = xs.map(x => T_MAX * x / (stk * cool));
+  const temp = rawTemp.map(t => Math.min(t, T_MAX));
+
+  Plotly.react("tempPlot", [
+    { x: xs, y: temp, name: "Stack temperature", line: { color: REGIME_COLORS.solar }},
+    { x: xs, y: xs.map(() => T_MAX), name: "Thermal limit", line: { dash: "dot", color: REGIME_COLORS.thermal }}
+  ], baseLayout("Solar oversizing", "Temperature (°C)"));
+}
+
+// ---- Specific energy ----
+function drawEffPlot() {
+  Plotly.react("effPlot", [
+    {
+      x: envelopeData.map(d => d.oversize_ratio),
+      y: envelopeData.map(d => d.kwh_per_kg),
+      mode: "lines",
+      name: "Ideal specific energy",
+      line: { color: "#22c55e" }
+    }
+  ], baseLayout("Solar oversizing", "kWh / kg"));
+}
+
+// ---- Loss attribution (operating point based) ----
+function drawLossPlot(utilization, stk, cool) {
+  const thermalLoss = Math.max(0, 1 - cool);
+  const stackLoss = Math.max(0, 1 - 1 / stk);
+  const curtailmentLoss = Math.max(0, 1 - utilization);
+
+  Plotly.react("lossPlot", [
+    { x: ["Losses"], y: [thermalLoss], name: "Thermal" },
+    { x: ["Losses"], y: [stackLoss], name: "Stack" },
+    { x: ["Losses"], y: [curtailmentLoss], name: "Curtailment" }
   ], {
+    ...baseLayout("", "Fraction"),
+    barmode: "stack"
+  });
+}
+
+// ---- Dominant regime over explored space ----
+function drawRegimePlot(stk, cool) {
+  let solarCount = 0, capacityCount = 0, thermalCount = 0;
+
+  envelopeData.forEach(d => {
+    const feasible = Math.min(1, 1 / stk) * Math.min(1, cool);
+    if (feasible < 0.98) thermalCount++;
+    else capacityCount++;
+  });
+
+  const total = envelopeData.length;
+
+  Plotly.react("regimePlot", [
+    { x: ["Solar"], y: [solarCount / total], type: "bar", marker: { color: REGIME_COLORS.solar }},
+    { x: ["Capacity"], y: [capacityCount / total], type: "bar", marker: { color: REGIME_COLORS.capacity }},
+    { x: ["Thermal"], y: [thermalCount / total], type: "bar", marker: { color: REGIME_COLORS.thermal }}
+  ], {
+    ...baseLayout("", "Fraction of operating range"),
+    barmode: "stack"
+  });
+}
+
+// =====================================================
+// UTILITIES
+// =====================================================
+function baseLayout(xlab, ylab) {
+  return {
     paper_bgcolor: "#0f1623",
     plot_bgcolor: "#0f1623",
     font: { color: "#ffffff" },
-    margin: { t: 30 },
-    xaxis: { title: "Solar Oversizing Ratio" },
-    yaxis: { title: "Hydrogen Production (kg/day)" }
-  });
+    margin: { t: 30, l: 50, r: 20, b: 50 },
+    xaxis: { title: xlab },
+    yaxis: { title: ylab }
+  };
+}
+
+function explanationText(regime) {
+  if (regime === "capacity") {
+    return "Hydrogen output is capped by electrolyzer size. Additional renewable power cannot be absorbed without increasing installed capacity.";
+  }
+  if (regime === "thermal") {
+    return "Thermal limits are active. The system must derate to avoid exceeding safe operating temperature.";
+  }
+  return "Hydrogen production is limited by available renewable energy. Equipment capacity and cooling are sufficient.";
 }
