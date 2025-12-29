@@ -111,7 +111,6 @@ header {
 
 .explainer {
   padding: 32px;
-  max-width: 900px;
 }
 
 .explainer-header {
@@ -181,3 +180,546 @@ header {
   margin-top: 64px;
   opacity: 0.9;
 }
+
+.equation-box {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 1.5rem 2rem;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.01)
+  );
+
+  border-left: 4px solid #2ecc71;
+  border-radius: 10px;
+
+  text-align: center;
+}
+
+.equation-box mjx-container {
+  font-size: 1.15em !important;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.text-col {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.visual-col {
+  text-align: center;
+  opacity: 0.85;
+}
+
+.visual-col img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.visual-caption {
+  display: block;
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #9aa3a9;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.model-stage {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 40px;
+}
+
+.plot-block {
+  margin: 40px 0;
+  background: rgba(255,255,255,0.03);
+  border-radius: 14px;
+  padding: 30px;
+}
+
+.plot-block canvas {
+  width: 100% !important;
+  height: 320px !important;
+}
+
+.plot-caption {
+  margin-top: 14px;
+  color: #b6f5c2;
+  font-size: 0.95rem;
+}
+
+.equation-block {
+  margin: 30px 0;
+  padding: 20px;
+  background: rgba(0,255,150,0.06);
+  border-left: 4px solid #00e676;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.math-details {
+  margin-top: 30px;
+  color: #ddd;
+}
+
+.explainer.wide {
+  max-width: 1400px;
+}
+
+.model-stage {
+  margin-top: 4rem;
+}
+
+.stage-text {
+  max-width: 900px;
+  margin-bottom: 2rem;
+}
+
+.equation-block {
+  background: rgba(20, 30, 30, 0.6);
+  border-left: 4px solid #3ddc84;
+  padding: 2rem;
+  margin: 2rem 0 3rem 0;
+  text-align: center;
+}
+
+.equation-caption {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #9fdcb8;
+}
+
+.plot-grid.three {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.plot-card {
+  background: rgba(15, 20, 25, 0.85);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+/* Full-width plot section */
+.plot-band {
+  width: 100%;
+  margin-top: 3rem;
+}
+
+/* Allow plots to expand wider than text */
+.plot-band .plot-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Plot container */
+.plot-band {
+  max-width: 1400px;
+  margin: 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Wide primary plot */
+.plot-card.wide {
+  width: 100%;
+}
+
+/* Two-column secondary grid */
+.plot-grid.two {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* Plot card styling (if not already present) */
+.plot-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  min-height: 340px;
+}
+
+.stage-plots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.plot-card {
+  background: #0f1720;
+  padding: 20px;
+  border-radius: 16px;
+}
+
+.plot-card.full {
+  grid-column: span 3;
+}
+
+.plot-card {
+  min-height: 420px;
+}
+
+.plot-card canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.kpi-card {
+  background: linear-gradient(135deg, #0f2f26, #0b1f1a);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.kpi-value {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #3ddc97;
+}
+
+.kpi-label {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: #9ca3af;
+}
+
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 360px;   /* ← CRITICAL */
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ============================= */
+/* SYSTEM EXPLORER — EXTENSIONS */
+/* ============================= */
+
+/* Secondary plot section (below KPIs) */
+.secondary-plots {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+/* Individual plot cards */
+.secondary-plots .plot-card {
+  background: #0f1623;
+  border-radius: 14px;
+  padding: 18px 20px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Plot titles */
+.secondary-plots .plot-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #9ae6b4;
+  opacity: 0.9;
+}
+
+/* Plot containers (Plotly hooks) */
+.secondary-plots .plot-card > div {
+  flex: 1;
+  width: 100%;
+}
+
+/* Full-width plot (regime bar) */
+.secondary-plots .plot-card.full-width {
+  grid-column: span 2;
+  min-height: 360px;
+}
+
+/* Ensure Plotly respects height */
+#powerPlot,
+#tempPlot,
+#effPlot,
+#lossPlot,
+#regimePlot {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+}
+
+/* Responsive behavior */
+@media (max-width: 1100px) {
+  .secondary-plots {
+    grid-template-columns: 1fr;
+  }
+
+  .secondary-plots .plot-card.full-width {
+    grid-column: span 1;
+  }
+}
+
+.stage-text p {
+  margin-bottom: 1.3rem;
+  line-height: 1.75;
+  font-size: 1.05rem;
+  color: #e5e7eb;
+}
+
+/* ===================================================== */
+/* MODEL JOURNEY — READABILITY & WIDTH IMPROVEMENTS */
+/* ===================================================== */
+
+/* 1️⃣ USE FULL SCREEN WIDTH FOR MODEL JOURNEY */
+.explainer,
+.how-full {
+  max-width: 100%;
+  padding-left: clamp(32px, 6vw, 96px);
+  padding-right: clamp(32px, 6vw, 96px);
+}
+
+/* Ensure model stages can expand wider */
+.model-stage {
+  max-width: 1400px;   /* was effectively limiting you */
+  margin: 80px auto;
+  padding: 0 24px;
+}
+
+/* 2️⃣ IMPROVE LONG-FORM TEXT READABILITY */
+.stage-text p {
+  margin-bottom: 1.3rem;
+  line-height: 1.75;
+  font-size: 1.05rem;
+  color: #e5e7eb;
+}
+
+/* Slightly dim secondary paragraphs */
+.stage-text p + p {
+  opacity: 0.95;
+}
+
+/* 3️⃣ MICRO-HEADINGS INSIDE SECTIONS */
+.stage-text h4 {
+  margin: 2.4rem 0 0.6rem 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #86efac;
+  letter-spacing: 0.02em;
+}
+
+/* 4️⃣ VISUAL SEPARATION BETWEEN SECTIONS */
+.model-stage {
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Remove divider on last section */
+.model-stage:last-of-type {
+  border-bottom: none;
+}
+
+/* 5️⃣ STRONGER CALLOUTS FOR KEY IDEAS */
+.explain-block.key {
+  background: linear-gradient(
+    135deg,
+    rgba(34,197,94,0.12),
+    rgba(34,197,94,0.03)
+  );
+  border-left: 4px solid #22c55e;
+  padding: 26px 28px;
+  border-radius: 14px;
+}
+
+/* 6️⃣ SUBTLE ANCHOR NOTES (CROSS-LINKS) */
+.anchor-note {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  opacity: 0.95;
+}
+
+.anchor-note.forward {
+  font-style: italic;
+}
+
+.anchor-note.explorer {
+  color: #86efac;
+}
+
+/* 7️⃣ BETTER PARAGRAPH WIDTH CONTROL */
+.stage-text,
+.stage-text.full {
+  max-width: 980px;   /* readable text width */
+}
+
+/* Allow plots to truly span wider than text */
+.plot-band {
+  max-width: 1600px;
+}
+
+/* 8️⃣ RESPONSIVE SAFETY */
+@media (max-width: 900px) {
+  .explainer,
+  .how-full {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .stage-text,
+  .stage-text.full {
+    max-width: 100%;
+  }
+}
+
+/* ================================= */
+/* GLOBAL HEADING COLOR OVERRIDE */
+/* ================================= */
+
+/* ================================= */
+/* HEADING HIERARCHY — GREEN SHADES */
+/* ================================= */
+
+h1 {
+  color: #22c55e;
+}
+
+h2 {
+  color: #4ade80;
+}
+
+h3 {
+  color: #86efac;
+}
+
+h4 {
+  color: #a7f3d0;
+}
+
+h5 {
+  color: #bbf7d0;
+}
+
+h6 {
+  color: #d1fae5;
+}
+
+h1 { font-weight: 600; }
+h2 { font-weight: 600; }
+h3 { font-weight: 500; }
+h4 { font-weight: 500; }
+h5 { font-weight: 400; }
+h6 { font-weight: 400; }
+
+
+/* ============================== */
+/* DISABLE NEW SECTION DIVIDER */
+/* ============================== */
+
+.model-stage::before {
+  display: none !important;
+}
+
+/* ========================================= */
+/* MAKE EXISTING SECTION DIVIDER MORE VISIBLE */
+/* ========================================= */
+
+/* Strengthen any existing horizontal divider */
+hr,
+.divider,
+.section-divider {
+  border: none;
+  height: 1px;
+  background-color: rgba(34, 197, 94, 0.45); /* brighter green */
+  opacity: 1;
+}
+
+/* ========================================= */
+/* SECTION DIVIDER — SINGLE, CLEAR, VISIBLE */
+/* ========================================= */
+
+.model-stage {
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(34, 197, 94, 0.35); /* visible green */
+}
+
+.explorer-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;  /* wider controls */
+  gap: 48px;                         /* more breathing room */
+  align-items: stretch;              /* equal height columns */
+}
+
+.controls {
+  background: linear-gradient(180deg, #0f1623, #0b1220);
+  border-radius: 16px;
+  padding: 28px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* fills vertical space */
+}
+
+
+.controls-title {
+  color: #86efac;
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+
+.controls-subtitle {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin-bottom: 1.6rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+
+  .explorer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    order: 2;
+  }
+
+  .plot-area {
+    order: 1;
+  }
+
+  .kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .secondary-plots {
+    grid-template-columns: 1fr;
+  }
+}
+
