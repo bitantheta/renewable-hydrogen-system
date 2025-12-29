@@ -102,3 +102,56 @@ svg {
   text-decoration: none;
   font-size: 1rem;
 }
+
+/* ============================
+   MOBILE COMPACT LAYOUT
+   ============================ */
+@media (max-width: 768px) {
+
+  /* Reduce vertical spacing globally */
+  section {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+
+  /* Hero / intro text block */
+  .hero,
+  .intro,
+  .landing {
+    margin-bottom: 24px !important;
+  }
+
+  /* Text blocks */
+  p {
+    margin-bottom: 16px !important;
+  }
+
+  /* Icon / process cards */
+  .component,
+  .card,
+  .step-card {
+    margin-bottom: 20px !important;
+    padding: 16px !important;
+  }
+
+  /* Image cards (solar, electrolysis, cooling, hydrogen) */
+  .component img,
+  .card img {
+    margin-bottom: 12px !important;
+  }
+
+  /* Section headings like "Why constraints matter" */
+  h2, h3 {
+    margin-top: 28px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Green explanation box */
+  .highlight-box,
+  .info-box {
+    margin-top: 20px !important;
+    padding: 16px !important;
+  }
+
+}
+
