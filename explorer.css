@@ -766,4 +766,29 @@ hr,
   }
 }
 
+/* =========================
+   MOBILE PLOT FIX
+   ========================= */
+@media (max-width: 768px) {
+
+  .plot-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .plot-card > div {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  /* Kill accidental horizontal squeeze */
+  .explorer,
+  .explorer-grid,
+  .secondary-plots {
+    overflow-x: hidden;
+  }
+}
+
+
 
