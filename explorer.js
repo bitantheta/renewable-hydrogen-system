@@ -1,7 +1,7 @@
 // =====================================================
 // SYSTEM EXPLORER — ENGINEERING-GRADE INTERACTIVE MODEL
 // =====================================================
-
+const isMobile = window.innerWidth < 768;
 // -----------------------------
 // DOM REFERENCES
 // -----------------------------
@@ -20,6 +20,8 @@ const eff = document.getElementById("eff");
 const loss = document.getElementById("loss");
 const limiter = document.getElementById("limiter");
 const interpretation = document.getElementById("interpretation");
+
+
 
 // -----------------------------
 // CONSTANTS (MODEL ASSUMPTIONS)
@@ -246,15 +248,45 @@ function drawRegimePlot(stk, cool) {
 // UTILITIES
 // =====================================================
 function baseLayout(xlab, ylab) {
+  const isMobile = window.innerWidth <= 768;
+
   return {
     paper_bgcolor: "#0f1623",
     plot_bgcolor: "#0f1623",
-    font: { color: "#ffffff" },
-    margin: { t: 30, l: 50, r: 20, b: 50 },
-    xaxis: { title: xlab },
-    yaxis: { title: ylab }
+
+    font: {
+      color: "#ffffff",
+      size: isMobile ? 11 : 13
+    },
+
+    margin: isMobile
+      ? { t: 40, l: 42, r: 10, b: 46 }
+      : { t: 40, l: 60, r: 30, b: 60 },
+
+    xaxis: {
+      title: isMobile ? "" : xlab,
+      tickfont: { size: isMobile ? 10 : 12 }
+    },
+
+    yaxis: {
+      title: isMobile ? "" : ylab,
+      tickfont: { size: isMobile ? 10 : 12 }
+    },
+
+    legend: {
+      orientation: isMobile ? "h" : "v",
+      x: isMobile ? 0 : 1.02,
+      y: isMobile ? -0.25 : 1,
+      xanchor: isMobile ? "left" : "left",
+      yanchor: isMobile ? "top" : "top",
+      font: { size: isMobile ? 10 : 12 }
+    },
+
+    height: isMobile ? 360 : 480
   };
 }
+
+
 
 function explanationText(regime) {
   if (regime === "capacity") {
