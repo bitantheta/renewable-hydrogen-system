@@ -423,6 +423,21 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+
+  .insight {
+    margin: 32px auto 24px;
+  }
+
+  .explanation {
+    margin: 20px auto;
+  }
+
+  .system {
+    margin-top: 24px;
+  }
+}
+
 
 
 
