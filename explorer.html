@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>System Explorer</title>
 
   <!-- Plotly -->
@@ -12,69 +14,89 @@
 
 <body>
   <nav class="nav">
-  <a href="index.html">System Overview</a>
-  <a class="active" href="explorer.html">System Explorer</a>
-  <a href="how-it-works.html">How the Model Works</a>
-  <a href="assumptions.html">Assumptions & Limits</a>
-</nav>
+    <a href="index.html">System Overview</a>
+    <a class="active" href="explorer.html">System Explorer</a>
+    <a href="model-journey.html">How the Model Works</a>
+  </nav>
 
   <main class="explorer">
 
+    <!-- ========================= -->
+    <!-- PAGE INTRO -->
+    <!-- ========================= -->
     <header>
       <h1>System Explorer</h1>
       <p>
-        Explore how renewable sizing and operational controls move the
-        operating point within the system’s feasible envelope.
+        This interactive model shows how renewable availability, equipment sizing,
+        and thermal limits jointly determine hydrogen production.
+        The green curve represents the system’s physical production envelope.
+        Sliders activate real-world constraints that shift the operating point.
       </p>
     </header>
 
+    <!-- ========================= -->
+    <!-- CONTROLS + PRIMARY PLOT -->
+    <!-- ========================= -->
     <section class="explorer-grid">
 
-      <!-- LEFT CONTROLS -->
+      <!-- CONTROLS -->
       <div class="controls">
 
+        <h3 class="controls-title">Operating Controls</h3>
+        <p class="controls-subtitle">
+        Adjust physical and design constraints to explore feasible operation.
+        </p>
+
+
         <label>
-          Solar Oversizing Ratio:
+          Solar Oversizing Ratio
           <span id="solarVal">1.00</span>
         </label>
         <input id="solar" type="range" min="0.5" max="2.0" step="0.01" value="1.0" />
 
         <label>
-          Electrolyzer Capacity (MW):
-          <span id="capVal">10</span>
+          Electrolyzer Capacity
+          <span id="capVal">10</span> MW
         </label>
         <input id="capacity" type="range" min="5" max="30" step="1" value="10" />
 
         <label>
-          Stack Scaling:
+          Stack Scaling
           <span id="stackVal">1.00</span>x
         </label>
         <input id="stack" type="range" min="0.5" max="2.0" step="0.05" value="1.0" />
 
         <label>
-          Cooling Effectiveness:
+          Cooling Effectiveness
           <span id="coolVal">1.00</span>x
         </label>
         <input id="cooling" type="range" min="0.5" max="1.5" step="0.05" value="1.0" />
 
       </div>
 
-      <!-- RIGHT PLOT -->
+      <!-- PRIMARY PLOT -->
       <div class="plot-area">
         <div id="plot"></div>
+        <p class="plot-caption">
+          Dashed curve: physically achievable hydrogen production under ideal conditions.
+          Solid marker: actual operating point after applying all constraints.
+        </p>
       </div>
 
     </section>
 
-    <!-- KPIs -->
+    <!-- ========================= -->
+    <!-- KPI ROW -->
+    <!-- ========================= -->
     <section class="kpis">
+
       <div class="kpi">
-        <div class="kpi-title">Hydrogen</div>
+        <div class="kpi-title">Hydrogen Produced</div>
         <div class="kpi-value"><span id="h2">–</span> kg/day</div>
       </div>
 
       <div class="kpi">
-        <div class="kpi-title">Efficiency</div>
+        <div class="kpi-title">Specific Energy</div>
         <div class="kpi-value"><span id="eff">–</span> kWh/kg</div>
       </div>
 
@@ -84,13 +106,54 @@
       </div>
 
       <div class="kpi">
-        <div class="kpi-title">Limiting Factor</div>
+        <div class="kpi-title">Limiting Constraint</div>
         <div class="kpi-value" id="limiter">–</div>
       </div>
+
     </section>
 
+    <p class="anchor-note explorer">
+      KPI values correspond to the highlighted operating point, after all physical
+      and thermal limits are enforced.
+    </p>
+
+    <!-- ========================= -->
+    <!-- SECONDARY DIAGNOSTIC PLOTS -->
+    <!-- ========================= -->
+    <section class="secondary-plots">
+
+      <div class="plot-card">
+        <h3>Available Power vs System Limits</h3>
+        <div id="powerPlot"></div>
+      </div>
+
+      <div class="plot-card">
+        <h3>Stack Temperature vs Operating Intensity</h3>
+        <div id="tempPlot"></div>
+      </div>
+
+      <div class="plot-card">
+        <h3>Specific Energy Consumption</h3>
+        <div id="effPlot"></div>
+      </div>
+
+      <div class="plot-card">
+        <h3>Loss Attribution</h3>
+        <div id="lossPlot"></div>
+      </div>
+
+      <div class="plot-card full-width">
+        <h3>Dominant Limiting Regime</h3>
+        <div id="regimePlot"></div>
+      </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- INTERPRETATION -->
+    <!-- ========================= -->
     <section class="interpretation" id="interpretation">
-      Adjust the sliders to explore system constraints.
+      Adjust the sliders to explore how different constraints become active.
     </section>
 
   </main>
@@ -98,3 +161,4 @@
   <script src="explorer.js"></script>
 </body>
 </html>
+
