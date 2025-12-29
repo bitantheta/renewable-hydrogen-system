@@ -332,13 +332,25 @@ function baseLayout(xlab, ylab) {
       : { t: 40, l: 60, r: 30, b: 60 },
 
     xaxis: {
-      title: mobile ? "" : xlab,
-      automargin: true
-    },
-    yaxis: {
-      title: mobile ? "" : ylab,
-      automargin: true
-    },
+  title: {
+    text: xlab,
+    standoff: mobile ? 10 : 20
+  },
+  tickfont: { size: mobile ? 10 : 12 },
+  titlefont: { size: mobile ? 11 : 14 },
+  automargin: true
+},
+
+yaxis: {
+  title: {
+    text: ylab,
+    standoff: mobile ? 10 : 20
+  },
+  tickfont: { size: mobile ? 10 : 12 },
+  titlefont: { size: mobile ? 11 : 14 },
+  automargin: true
+},
+
 
     legend: {
       orientation: "h",
