@@ -317,53 +317,53 @@ function drawRegimePlot(stk, cool) {
 // UTILITIES
 // =====================================================
 function baseLayout(xlab, ylab) {
+
   const mobile = window.innerWidth < 768;
 
   return {
-    autosize: true,
     paper_bgcolor: "#0f1623",
     plot_bgcolor: "#0f1623",
+
     font: {
-      color: "#ffffff",
-      size: mobile ? 11 : 14
+      color: "#e5e7eb",
+      size: mobile ? 11 : 13
     },
-    margin: mobile
-      ? { t: 20, l: 45, r: 15, b: 90 }
-      : { t: 40, l: 60, r: 30, b: 60 },
+
+    margin: {
+      t: 40,
+      l: mobile ? 55 : 65,
+      r: 20,
+      b: mobile ? 55 : 65
+    },
 
     xaxis: {
-  title: {
-    text: xlab,
-    standoff: mobile ? 10 : 20
-  },
-  tickfont: { size: mobile ? 10 : 12 },
-  titlefont: { size: mobile ? 11 : 14 },
-  automargin: true
-},
+      title: {
+        text: xlab,
+        font: { size: mobile ? 11 : 14 },
+        standoff: mobile ? 8 : 16
+      },
+      tickfont: { size: mobile ? 10 : 12 },
+      automargin: true
+    },
 
-yaxis: {
-  title: {
-    text: ylab,
-    standoff: mobile ? 10 : 20
-  },
-  tickfont: { size: mobile ? 10 : 12 },
-  titlefont: { size: mobile ? 11 : 14 },
-  automargin: true
-},
-
+    yaxis: {
+      title: {
+        text: ylab,
+        font: { size: mobile ? 11 : 14 },
+        standoff: mobile ? 8 : 16
+      },
+      tickfont: { size: mobile ? 10 : 12 },
+      automargin: true
+    },
 
     legend: {
-      orientation: "h",
-      x: 0,
-      y: -0.35,
-      xanchor: "left",
-      yanchor: "top",
+      orientation: mobile ? "h" : "v",
+      x: mobile ? 0 : 1.02,
+      y: mobile ? -0.25 : 1,
       font: { size: mobile ? 10 : 12 }
     }
   };
 }
-
-
 
 
 function explanationText(regime) {
