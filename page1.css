@@ -434,6 +434,24 @@ body {
   }
 }
 
+/* ============================= */
+/* SITE CREDIT */
+/* ============================= */
+
+.site-credit {
+  text-align: center;
+  padding: 16px 0 24px;
+  font-size: 0.85rem;
+  color: #9ca3af;
+  opacity: 0.85;
+}
+
+.site-credit strong {
+  color: #6ee7b7;
+  font-weight: 500;
+}
+
+
 
 
 
